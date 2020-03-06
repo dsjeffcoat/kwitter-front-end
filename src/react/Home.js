@@ -1,6 +1,7 @@
 import React from "react";
-import { LoginForm, Menu } from "./components";
+import { LoginForm, Menu, SignupForm } from "./components";
 import { userIsNotAuthenticated } from "./HOCs";
+import { Switch } from "react-router-dom";
 
 class Home extends React.Component {
   render() {
@@ -8,7 +9,10 @@ class Home extends React.Component {
       <>
         <Menu />
         <h2>Your favorite microblogging platform</h2>
-        <LoginForm />
+        <Switch>
+          <LoginForm />
+          <SignupForm />
+        </Switch>
       </>
     );
   }

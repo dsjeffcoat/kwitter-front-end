@@ -3,9 +3,9 @@ import Spinner from "react-spinkit";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import { connect } from "react-redux";
-import { signup } from "../../redux";
+import { signup, login } from "../../redux";
 import "./SignupForm.css";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 
 class SignupForm extends React.Component {
   state = {
@@ -61,8 +61,21 @@ class SignupForm extends React.Component {
             Already a user? <Link to={"/"}>Login here</Link>
           </p>
         </form>
-        {loading && <Spinner name="circle" color="blue" />}
-        {error && <p style={{ color: "red" }}>{error.message}</p>}
+        {loading && <Spinner name="circle" color="blue" /> && (
+          <Redirect path="/" />
+        )}
+        {error && (
+          <p style={{ color: "red" }}>
+            Error During Submission!
+            <br />
+            Please resubmit according to the following guidelines: <br />
+            (1) Username must be unique and at least 3 characters. <br />
+            (2) Username is case-sensitive.
+            <br />
+            (3) Password must be at least 3 alphanumeric characters and
+            case-sensitive.
+          </p>
+        )}
       </React.Fragment>
     );
   }
@@ -74,5 +87,5 @@ export default connect(
     loading: state.users.signup.loading,
     error: state.users.signup.error
   }),
-  { signup }
+  { signup, login }
 )(SignupForm);

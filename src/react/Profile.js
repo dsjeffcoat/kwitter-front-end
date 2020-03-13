@@ -18,6 +18,24 @@ import { getUser } from "../redux/index";
 // };
 
 class Profile extends React.Component {
+  componentDidMount() {
+    this.props.getUser(this.props.userName)
+  }
+  toDisplayInfo() {
+    if (this.props.userInfo ==
+      null) {
+      return (
+        <div>Loading</div>
+      )
+    } else {
+      return (
+        <div>
+          <em>Created at: </em>
+          {this.props.userInfo.user.createdAt}
+        </div>
+      );
+    }
+  }
   render() {
     return (
       <>

@@ -4,6 +4,7 @@
   "homepage": "https://cheriaa.gitlab.io/assessment---kwitter-frontend",
   "private": true,
   "dependencies": {
+    "@material-ui/core": "^4.9.5",
     "@reduxjs/toolkit": "^1.2.5",
     "connected-react-router": "^6.5.2",
     "history": "^4.10.1",
@@ -14,6 +15,7 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "^3.2.0",
     "react-spinkit": "^3.0.0",
+    "react-user-profile": "^1.0.3",
     "redux": "^4.0.4",
     "redux-auth-wrapper": "^2.1.0"
   },

@@ -14,7 +14,7 @@ class UserCard extends React.Component {
     render() {
         return (
           <>
-            <img
+            <img alt="Loading..."
               src={
                 fakeUser.pictureLocation
                   ? fakeUser.pictureLocation

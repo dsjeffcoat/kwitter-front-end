@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { login } from "../../redux";
 import { Link } from "react-router-dom";
 import "./LoginForm.css";
-import { Button, TextField } from "@material-ui/core";
+import { TextField, Button } from "@material-ui/core";
 
 class LoginForm extends React.Component {
   state = { username: "", password: "" };
@@ -26,21 +26,28 @@ class LoginForm extends React.Component {
           <label htmlFor="username">Username</label>
           <TextField
             type="text"
-            name="username"
             variant="outlined"
+            name="username"
             autoFocus
             required
             onChange={this.handleChange}
           />
+
           <label htmlFor="password">Password</label>
           <TextField
             type="password"
-            name="password"
             variant="outlined"
+            name="password"
             required
             onChange={this.handleChange}
           />
-          <Button variant="contained" type="submit" disabled={loading}>
+
+          <Button
+            variant="contained"
+            color="primary"
+            type="submit"
+            disabled={loading}
+          >
             Login
           </Button>
           <p>

@@ -1,11 +1,11 @@
 import React from "react";
 import Spinner from "react-spinkit";
-import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
+import { Button, TextField } from "@material-ui/core";
+import { Alert, AlertTitle } from "@material-ui/lab";
 import { connect } from "react-redux";
-import { signup, login } from "../../redux";
+import { signup } from "../../redux";
 import "./SignupForm.css";
-import { Link, Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 class SignupForm extends React.Component {
   state = {
@@ -23,12 +23,21 @@ class SignupForm extends React.Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
+  setShow = e => {
+    this.setState({ show: true });
+  };
+
   render() {
     const { loading, error } = this.props;
 
     return (
       <React.Fragment>
-        <form id="signup-form" onSubmit={this.handleSignup}>
+        <form
+          id="signup-form"
+          noValidate
+          autoComplete="off"
+          onSubmit={this.handleSignup}
+        >
           <label htmlFor="username">Username</label>
           <TextField
             type="text"
@@ -54,28 +63,46 @@ class SignupForm extends React.Component {
             required
             onChange={this.handleChange}
           />
-          <Button variant="contained" type="submit" disabled={loading}>
+          <Button
+            variant="contained"
+            color="primary"
+            type="submit"
+            disabled={loading}
+          >
             Sign Up
           </Button>
           <p>
-            Already a user? <Link to={"/"}>Login here</Link>
+            Already a user? <Link to="/">Login here</Link>
           </p>
         </form>
-        {loading && <Spinner name="circle" color="blue" /> && (
-          <Redirect path="/" />
-        )}
+        {loading && <Spinner name="circle" color="blue" />}
         {error && (
-          <p style={{ color: "red" }}>
-            Error During Submission!
-            <br />
-            Please resubmit according to the following guidelines: <br />
-            (1) Username must be unique and at least 3 characters. <br />
-            (2) Username is case-sensitive.
-            <br />
-            (3) Password must be at least 3 alphanumeric characters and
-            case-sensitive.
-          </p>
+          <>
+            <Alert severity="error">
+              {/* <p style={{ color: "red" }}> */}
+              <AlertTitle>Registration Error</AlertTitle>
+              <p>
+                Please resubmit according to the following guidelines: <br />
+                (1) Username must be unique and at least 3 characters. <br />
+                (2) Username is case-sensitive.
+                <br />
+                (3) Password must be at least 3 alphanumeric characters and
+                case-sensitive.
+              </p>
+            </Alert>
+          </>
         )}
+        {/* {
+          <>
+            <Alert severity="success" onClose={() => setShow(false)}>
+              <AlertTitle>Registration Successful</AlertTitle>
+              <p>
+                Head over to the <Link href="/">Login Page</Link> and log into
+                your account for the first time!
+              </p>
+            </Alert>
+          </>
+        } */}
       </React.Fragment>
     );
   }
@@ -87,5 +114,5 @@ export default connect(
     loading: state.users.signup.loading,
     error: state.users.signup.error
   }),
-  { signup, login }
+  { signup }
 )(SignupForm);

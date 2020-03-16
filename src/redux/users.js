@@ -40,11 +40,10 @@ export const getUser = username => dispatch => {
 //     .catch(err => Promise.reject(dispatch(LOGOUT.FAIL(err))));
 // };
 
-    // [LOGOUT.SUCCESS.toString()]: (state, action) => asyncInitialState
+// [LOGOUT.SUCCESS.toString()]: (state, action) => asyncInitialState
 //   }),
 //   logout: createReducer(asyncInitialState, {
 //     ...asyncCases(LOGOUT)
-
 
 const SIGNUP = createActions("signup");
 export const _signup = signupData => dispatch => {
@@ -73,6 +72,11 @@ export const reducers = {
     ...asyncCases(SIGNUP),
     [SIGNUP.SUCCESS.toString()]: (state, action) => asyncInitialState
   }),
-  getUser: createReducer(getInitStateFromStorage("getUser", asyncInitialState), {
-    ...asyncCases(GETUSER),
+  getUser: createReducer(
+    getInitStateFromStorage("getUser", asyncInitialState),
+    {
+      ...asyncCases(GETUSER),
+      [GETUSER.SUCCESS.toString()]: (state, action) => asyncInitialState
+    }
+  )
 };

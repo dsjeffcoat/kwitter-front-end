@@ -19,14 +19,11 @@ import { getUser } from "../redux/index";
 
 class Profile extends React.Component {
   componentDidMount() {
-    this.props.getUser(this.props.userName)
+    this.props.getUser(this.props.username);
   }
   toDisplayInfo() {
-    if (this.props.userInfo ==
-      null) {
-      return (
-        <div>Loading</div>
-      )
+    if (this.props.userInfo == null) {
+      return <div>Loading</div>;
     } else {
       return (
         <div>
@@ -43,7 +40,6 @@ class Profile extends React.Component {
         <h2>Profile</h2>
         <UserCard />
         <MessageList />
-        
       </>
     );
   }
@@ -52,9 +48,9 @@ class Profile extends React.Component {
 const mapDispatchToProps = { getUser };
 const mapStateToProps = state => {
   return {
-    userName: state.auth.login.result.username,
+    username: state.auth.login.result.username,
     userInfo: state.users.getUser.result
-  }
+  };
 };
 export default connect(
   mapStateToProps,

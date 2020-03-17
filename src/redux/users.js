@@ -1,6 +1,6 @@
 import {
   domain,
- // jsonHeaders,
+  jsonHeaders,
   handleJsonResponse,
   getInitStateFromStorage,
   asyncInitialState,
@@ -8,6 +8,8 @@ import {
   createActions,
   createReducer
 } from "./helpers";
+
+import { login } from "./auth";
 
 const url = domain + "/users";
 
@@ -38,12 +40,43 @@ export const getUser = username => dispatch => {
 //     .catch(err => Promise.reject(dispatch(LOGOUT.FAIL(err))));
 // };
 
-export const reducers = {
-  getUser: createReducer(getInitStateFromStorage("getUser", asyncInitialState), {
-    ...asyncCases(GETUSER),
-    // [LOGOUT.SUCCESS.toString()]: (state, action) => asyncInitialState
+// [LOGOUT.SUCCESS.toString()]: (state, action) => asyncInitialState
 //   }),
 //   logout: createReducer(asyncInitialState, {
 //     ...asyncCases(LOGOUT)
+
+const SIGNUP = createActions("signup");
+export const _signup = signupData => dispatch => {
+  dispatch(SIGNUP.START());
+
+  return fetch(url, {
+    method: "POST",
+    headers: jsonHeaders,
+    body: JSON.stringify(signupData)
   })
+    .then(handleJsonResponse)
+    .then(result => dispatch(SIGNUP.SUCCESS(result)))
+    .catch(err => Promise.reject(dispatch(SIGNUP.FAIL(err))));
+};
+
+export const signup = signupData => dispatch => {
+  dispatch(_signup(signupData)).then(() =>
+    dispatch(
+      login({ username: signupData.username, password: signupData.password })
+    )
+  );
+};
+
+export const reducers = {
+  signup: createReducer(getInitStateFromStorage("signup", asyncInitialState), {
+    ...asyncCases(SIGNUP),
+    [SIGNUP.SUCCESS.toString()]: (state, action) => asyncInitialState
+  }),
+  getUser: createReducer(
+    getInitStateFromStorage("getUser", asyncInitialState),
+    {
+      ...asyncCases(GETUSER),
+      [GETUSER.SUCCESS.toString()]: (state, action) => asyncInitialState
+    }
+  )
 };

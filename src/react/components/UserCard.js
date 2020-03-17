@@ -25,6 +25,7 @@ class UserCard extends React.Component {
             <p>
               <em>Username:</em> {fakeUser.username}
             </p>
+            <button>Edit Profile</button>
             <p>
               <h4>About Me</h4>
               {fakeUser.about

@@ -18,32 +18,36 @@ import { getUser } from "../redux/index";
 // };
 
 class Profile extends React.Component {
-  componentDidMount() {
-    this.props.getUser(this.props.userName)
-  }
-  toDisplayInfo() {
-    if (this.props.userInfo ==
-      null) {
-      return (
-        <div>Loading</div>
-      )
-    } else {
-      return (
-        <div>
-          <em>Created at: </em>
-          {this.props.userInfo.user.createdAt}
-        </div>
-      );
-    }
-  }
+  // componentDidMount() {
+  //   this.props.getUser(this.props.userName)
+  // }
+  // toDisplayInfo() {
+  //   if (this.props.userInfo ==
+  //     null) {
+  //     return (
+  //       <div>Loading</div>
+  //     )
+  //   } else {
+  //     return (
+  //       <div>
+  //         <em>Created at: </em>
+  //         {this.props.userInfo.user.createdAt}
+  //       </div>
+  //     );
+  //   }
+  // }
   render() {
     return (
       <>
         <Menu isAuthenticated={this.props.isAuthenticated} />
         <h2>Profile</h2>
-        <UserCard />
-        <MessageList />
-        
+        <div style={{ display: "flex" }}>
+          <UserCard />
+          <div style={{ display: "flex", flexDirection: "column", flex: 1 }}>
+          <h3>Your Messages</h3>
+          <MessageList />
+          </div>        
+        </div> 
       </>
     );
   }

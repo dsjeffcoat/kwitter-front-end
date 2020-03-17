@@ -20,11 +20,13 @@ const messages = [
 class MessageList extends React.Component {
     render() {
         return messages.map(message => {
-            return <MessageCard
-                username={message.username}
-                text={message.text}
-                createdAt={message.createdAt}
-            />
+            return (
+                <MessageCard
+                    username={message.username}
+                    text={message.text}
+                    createdAt={message.createdAt}
+                />
+            );
         });
     }
 }

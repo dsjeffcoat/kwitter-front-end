@@ -4,7 +4,17 @@ import { connect } from "react-redux";
 import { login } from "../../redux";
 import { Link } from "react-router-dom";
 import "./LoginForm.css";
-import { TextField, Button } from "@material-ui/core";
+import {
+  TextField,
+  Button,
+  makeStyles,
+  Container,
+  CssBaseline,
+  Avatar,
+  Typography,
+  Grid
+} from "@material-ui/core";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 
 class LoginForm extends React.Component {
   state = { username: "", password: "" };
@@ -20,43 +30,85 @@ class LoginForm extends React.Component {
 
   render() {
     const { loading, error } = this.props;
+    const classes = makeStyles(theme => ({
+      paper: {
+        marginTop: theme.spacing(8),
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center"
+      },
+      avatar: {
+        margin: theme.spacing(1),
+        backgroundColor: theme.palette.secondary.main,
+        alignItems: "center"
+      },
+      form: {
+        width: "100%", // Fix IE 11 issue.
+        marginTop: theme.spacing(1)
+      },
+      submit: {
+        margin: theme.spacing(3, 0, 2)
+      }
+    }));
+
     return (
-      <React.Fragment>
-        <form id="login-form" onSubmit={this.handleLogin}>
-          <label htmlFor="username">Username</label>
-          <TextField
-            type="text"
-            variant="outlined"
-            name="username"
-            autoFocus
-            required
-            onChange={this.handleChange}
-          />
-
-          <label htmlFor="password">Password</label>
-          <TextField
-            type="password"
-            variant="outlined"
-            name="password"
-            required
-            onChange={this.handleChange}
-          />
-
-          <Button
-            variant="contained"
-            color="primary"
-            type="submit"
-            disabled={loading}
+      <Container
+        component="main"
+        maxWidth="xs"
+        style={{ marginTop: "20px", alignItems: "center" }}
+      >
+        <CssBaseline />
+        <div className={classes.paper}>
+          <Avatar className={classes.avatar}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Sign in
+          </Typography>
+          <form
+            className={classes.form}
+            id="login-form"
+            noValidate
+            onSubmit={this.handleLogin}
           >
-            Login
-          </Button>
-          <p>
-            Not a user? <Link to={"/signup"}>Sign up here</Link>
-          </p>
-        </form>
-        {loading && <Spinner name="circle" color="blue" />}
-        {error && <p style={{ color: "red" }}>{error.message}</p>}
-      </React.Fragment>
+            <label htmlFor="username">Username</label>
+            <TextField
+              type="text"
+              variant="outlined"
+              name="username"
+              autoFocus
+              required
+              onChange={this.handleChange}
+            />
+            <label htmlFor="password">Password</label>
+            <TextField
+              type="password"
+              variant="outlined"
+              name="password"
+              required
+              onChange={this.handleChange}
+            />
+
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              disabled={loading}
+              className={classes.submit}
+            >
+              Sign In
+            </Button>
+            <Grid item>
+              <Link to={"/signup"} variant="body2">
+                {"Don't have an account? Sign Up"}
+              </Link>
+            </Grid>
+          </form>
+          {loading && <Spinner name="circle" color="blue" />}
+          {error && <p style={{ color: "red" }}>{error.message}</p>}
+        </div>
+      </Container>
     );
   }
 }

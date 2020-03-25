@@ -8,7 +8,8 @@
 
 #menu-links {
   display: flex;
-  padding-left: 1em;
+  padding-left: 80em;
+  color: white;
 }
 
 #menu-links a {
@@ -16,8 +17,4 @@
   color: darkblue;
   text-decoration: underline;
   cursor: pointer;
-}
-
-#logged-in {
-  text-align: right;
 }

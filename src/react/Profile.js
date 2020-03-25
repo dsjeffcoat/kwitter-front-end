@@ -1,58 +1,84 @@
 import React from "react";
-import { Menu, UserCard, MessageList } from "./components";
+import {
+  Menu,
+  UserCard,
+  GetUserMessages,
+  CreateNewMessage,
+  GetUserList
+} from "./components";
 import { userIsAuthenticated } from "./HOCs";
-import { connect } from "react-redux";
-import { getUser } from "../redux/index";
+import { makeStyles } from "@material-ui/core/styles";
+import Paper from "@material-ui/core/Paper";
+import Grid from "@material-ui/core/Grid";
 
-// const fakeuser = {
-//   user: {
-//     username: "fakey",
-//     displayName: "fake",
-//     about: "I'm fake",
-//     createdAt: "2020-03-11T16:57:39.885Z",
-//     updatedAt: "2020-03-11T16:57:39.885Z",
-//     pictureLocation: "https://i.picsum.photos/100/100.jpg",
-//     googleId: "string"
-//   },
-//   statusCode: 0
-// };
+import { connect } from "react-redux";
+import { getuser, deleteuser, createmessage } from "../redux";
 
 class Profile extends React.Component {
   componentDidMount() {
-    this.props.getUser(this.props.username);
+    this.props.getuser(this.props.match.params.username);
   }
-  toDisplayInfo() {
-    if (this.props.userInfo == null) {
-      return <div>Loading</div>;
-    } else {
-      return (
-        <div>
-          <em>Created at: </em>
-          {this.props.userInfo.user.createdAt}
-        </div>
-      );
-    }
-  }
+
+  handleDeleteUser = () => {
+    this.props.deleteuser(this.props.match.params.username);
+  };
+
   render() {
+    const classes = makeStyles(theme => ({
+      root: {
+        flexGrow: 1
+      },
+      paper: {
+        padding: theme.spacing(2),
+        textAlign: "center",
+        color: theme.palette.text.secondary
+      }
+    }));
+    if (this.props.result === null) {
+      return <div></div>;
+    }
     return (
-      <>
-        <Menu isAuthenticated={this.props.isAuthenticated} />
-        <h2>Profile</h2>
-        <UserCard />
-        <MessageList />
-      </>
+      <div className={classes.root}>
+        <Grid container spacing={3} justify="center">
+          <Grid item xs={12}>
+            <Paper className={classes.paper}>
+              <Menu isAuthenticated={this.props.isAuthenticated} />
+            </Paper>
+          </Grid>
+          <Grid item xs={12} sm={2}>
+            <Paper className={classes.paper}>
+              <UserCard
+                username={this.props.result.user.username}
+                displayName={this.props.result.user.displayName}
+                pictureLocation={this.props.result.user.pictureLocation}
+                bio={this.props.result.user.about}
+                password={this.props.result.user.password}
+                deleteuser={this.handleDeleteUser}
+              />
+            </Paper>
+          </Grid>
+          <Grid item xs={12} sm={4}>
+            <Paper className={classes.paper}>
+              <GetUserMessages username={this.props.match.params.username} />
+            </Paper>
+          </Grid>
+          <Grid item xs={12} sm={2}>
+            <Paper className={classes.paper}>
+              <CreateNewMessage username={this.props.result.user.username} />
+              <GetUserList />
+            </Paper>
+          </Grid>
+        </Grid>
+      </div>
     );
   }
 }
 
-const mapDispatchToProps = { getUser };
-const mapStateToProps = state => {
-  return {
-    username: state.auth.login.result.username,
-    userInfo: state.users.getUser.result
-  };
-};
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  state => ({
+    result: state.users.getuser.result,
+    loading: state.users.getuser.loading,
+    error: state.users.getuser.error
+  }),
+  { getuser, deleteuser, createmessage }
 )(userIsAuthenticated(Profile));

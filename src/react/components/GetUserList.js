@@ -6,16 +6,26 @@ import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardActions from "@material-ui/core/CardActions";
-//import Button from "@material-ui/core/Button";
+import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
-import { getuserlist } from "../../redux";
+import { getuserlist, getuser, getusermessages } from "../../redux";
 
 class GetUserList extends React.Component {
+  state = { username: "" };
   componentDidMount() {
     this.props.getuserlist();
   }
-
+  handleLookup = e => {
+    console.log(this.state.username);
+    this.props.getuser(this.state.username);
+    this.props.getusermessages(this.state.username);
+  };
+  handleChange = e => {
+    console.log("handle change " + e.target.name + ":" + e.target.value);
+    this.setState({ [e.target.name]: e.target.value });
+    console.log("state = " + JSON.stringify(this.state));
+  };
   render() {
     const classes = makeStyles(theme => ({
       root: { maxWidth: 600 },
@@ -29,14 +39,18 @@ class GetUserList extends React.Component {
     if (this.props.result === null) {
       return <div></div>;
     }
-    const flatProps = {
-      options: this.props.result.map(user => user.displayName)
-    };
+    const flatProps = { options: this.props.result.map(user => user.username) };
     return (
       <Card className={classes.root}>
         <Typography
           component="div"
-          style={{ backgroundColor: "#cfe8fc", height: "30px", width: "600px" }}
+          style={{
+            backgroundColor: "#4e209e",
+            height: "30px",
+            width: "600px",
+            color: "white",
+            paddingLeft: "100px"
+          }}
         >
           Lookup user
         </Typography>
@@ -45,13 +59,25 @@ class GetUserList extends React.Component {
             <Autocomplete
               {...flatProps}
               id="userList"
+              name="username"
               renderInput={params => (
-                <TextField {...params} label="User List" margin="normal" />
+                <TextField
+                  {...params}
+                  id="txtUser"
+                  name="username"
+                  label="User List"
+                  margin="normal"
+                  onSelect={this.handleChange}
+                />
               )}
             />
           </CardContent>
         </CardActionArea>
-        <CardActions disableSpacing></CardActions>
+        <CardActions disableSpacing>
+          <Button id="lookupUser" onClick={this.handleLookup}>
+            Lookup
+          </Button>
+        </CardActions>
       </Card>
     );
   }
@@ -63,5 +89,5 @@ export default connect(
     loading: state.users.getuserlist.loading,
     error: state.users.getuserlist.error
   }),
-  { getuserlist }
+  { getuserlist, getuser, getusermessages }
 )(GetUserList);

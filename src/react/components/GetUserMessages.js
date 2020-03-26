@@ -1,7 +1,11 @@
 import React from "react";
-//import MessageCard from "./MessageCard";
 import { connect } from "react-redux";
-import { getusermessages, addlike, removelike } from "../../redux";
+import {
+  getusermessages,
+  addlike,
+  removelike,
+  deletemessage
+} from "../../redux";
 import MessageCard from "./MessageCard";
 
 class GetUserMessages extends React.Component {
@@ -11,6 +15,12 @@ class GetUserMessages extends React.Component {
   handleToggleLikes = messageID => {
     console.log("button worked " + messageID);
     this.props.addlike(messageID);
+  };
+
+  handleDelete = event => {
+    if (event.currentTarget.id === "btnYes") {
+      this.props.deletemessage(this.props.messageID);
+    }
   };
 
   render() {
@@ -27,6 +37,7 @@ class GetUserMessages extends React.Component {
             id={message.id}
             likes={message.likes.length}
             togglelikes={this.handleToggleLikes}
+            deletemessage={this.handleDelete}
           />
         ))}
       </div>
@@ -47,5 +58,5 @@ export default connect(
     loading: state.messages.getusermessages.loading,
     error: state.messages.getusermessages.error
   }),
-  { getusermessages, addlike, removelike }
+  { getusermessages, addlike, removelike, deletemessage }
 )(GetUserMessages);

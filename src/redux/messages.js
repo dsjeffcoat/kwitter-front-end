@@ -64,27 +64,25 @@ export const createmessage = postMessageData => (dispatch, getState) => {
 };
 
 const DELETEMESSAGE = createActions("deletemessage");
-const _deletemessage = messageId => (dispatch, getState) => {
-  dispatch({
-    type: DELETEMESSAGE.START
-  });
+const _deletemessage = messageID => (dispatch, getState) => {
+  dispatch(DELETEMESSAGE.START());
 
   const token = getState().auth.login.result.token;
 
-  return fetch(url + "/" + messageId, {
+  return fetch(url + `/${messageID}`, {
     method: "DELETE",
     headers: { Authorization: "Bearer " + token, ...jsonHeaders }
   })
     .then(handleJsonResponse)
     .then(result => dispatch(DELETEMESSAGE.SUCCESS(result)))
-    .catch(err => Promise.reject(dispatch(DELETEMESSAGE.FAIL(err))));
+    .catch(err => Promise.reject(dispatch(DELETEMESSAGE.FAIL(err.toString()))));
 };
 
-export const deletemessage = messageId => (dispatch, getState) => {
-  return dispatch(_deletemessage(messageId)).then(() => {
+export const deletemessage = messageID => (dispatch, getState) => {
+  return dispatch(_deletemessage(messageID)).then(() => {
     const username = getState().auth.login.result.username;
     const pathname = getState().router.location.pathname;
-    if (pathname === "/messagefeed/" + username) {
+    if (pathname === `/messagefeed/${username}`) {
       dispatch(getusermessages());
     }
     dispatch(getusermessages(username));

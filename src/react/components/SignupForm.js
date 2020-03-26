@@ -1,21 +1,24 @@
 import React from "react";
 import Spinner from "react-spinkit";
+import Button from "@material-ui/core/Button";
+import TextField from "@material-ui/core/TextField";
 import { connect } from "react-redux";
-import { signup } from "../../redux";
-import "./SignupForm.css";
-import { Link } from "react-router-dom";
+import { signup, login } from "../../redux";
 
-import {
-  TextField,
-  Button,
-  makeStyles,
-  Container,
-  CssBaseline,
-  Avatar,
-  Typography,
-  Grid
-} from "@material-ui/core";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import Avatar from "@material-ui/core/Avatar";
+
+import CssBaseline from "@material-ui/core/CssBaseline";
+
+//import FormControlLabel from '@material-ui/core/FormControlLabel';
+//import Checkbox from '@material-ui/core/Checkbox';
+import Link from "@material-ui/core/Link";
+import Paper from "@material-ui/core/Paper";
+//import Box from '@material-ui/core/Box';
+import Grid from "@material-ui/core/Grid";
+import AddCircleIcon from "@material-ui/icons/AddCircle";
+import Typography from "@material-ui/core/Typography";
+import { makeStyles } from "@material-ui/core/styles";
+import sideImage from "./images/Kwitter-symbol5.png";
 import { Alert, AlertTitle } from "@material-ui/lab";
 
 class SignupForm extends React.Component {
@@ -34,15 +37,24 @@ class SignupForm extends React.Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
-  setShow = e => {
-    this.setState({ show: true });
-  };
-
   render() {
     const { loading, error } = this.props;
     const classes = makeStyles(theme => ({
+      root: {
+        height: "100vh"
+      },
+      image: {
+        backgroundImage: sideImage,
+        backgroundRepeat: "no-repeat",
+        backgroundColor:
+          theme.palette.type === "dark"
+            ? theme.palette.grey[900]
+            : theme.palette.grey[50],
+        backgroundSize: "cover",
+        backgroundPosition: "center"
+      },
       paper: {
-        marginTop: theme.spacing(8),
+        margin: theme.spacing(8, 4),
         display: "flex",
         flexDirection: "column",
         alignItems: "center"
@@ -59,89 +71,125 @@ class SignupForm extends React.Component {
         margin: theme.spacing(3, 0, 2)
       }
     }));
-
     return (
-      <Container
-        component="main"
-        maxWidth="xs"
-        style={{ marginTop: "20px", justifyContent: "center" }}
-      >
-        <CssBaseline />
-        <div className={classes.paper}>
-          <Avatar className={classes.avatar}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign up
-          </Typography>
-          <form
-            className={classes.form}
-            id="signup-form"
-            noValidate
-            onSubmit={this.handleSignup}
+      <React.Fragment>
+        <Grid container component="main" className={classes.root}>
+          <CssBaseline />
+          <Grid
+            item
+            xs={false}
+            sm={3}
+            md={7}
+            className={classes.image}
+            alignItems="center"
+            justify="center"
           >
-            <label htmlFor="username">Username</label>
-            <TextField
-              type="text"
-              name="username"
-              variant="outlined"
-              autoFocus
-              required
-              onChange={this.handleChange}
-            />
-            <label htmlFor="displayName">Display Name</label>
-            <TextField
-              type="text"
-              name="displayName"
-              variant="outlined"
-              required
-              onChange={this.handleChange}
-            />
-            <label htmlFor="password">Password</label>
-            <TextField
-              type="password"
-              name="password"
-              variant="outlined"
-              required
-              onChange={this.handleChange}
-            />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-              disabled={loading}
+            <img src={sideImage} alt="animal" />{" "}
+          </Grid>
+          <Grid
+            item
+            xs={12}
+            sm={8}
+            md={5}
+            component={Paper}
+            elevation={6}
+            square
+          >
+            <div
+              className={classes.paper}
+              style={{ paddingLeft: "250px", paddingTop: "100px" }}
             >
-              Sign Up
-            </Button>
-            <Grid container justify="flex-end">
-              <Grid item>
-                <Link to={"/"} variant="body2">
-                  {"Already have an account? Sign in"}
-                </Link>
-              </Grid>
-            </Grid>
-          </form>
-          {loading && <Spinner name="circle" color="blue" />}
-          {error && (
-            <>
-              <Alert severity="error">
-                {/* <p style={{ color: "red" }}> */}
-                <AlertTitle>Registration Error</AlertTitle>
-                <p>
-                  Please resubmit according to the following guidelines: <br />
-                  (1) Username must be unique and at least 3 characters. <br />
-                  (2) Username is case-sensitive.
-                  <br />
-                  (3) Password must be at least 3 alphanumeric characters and
-                  case-sensitive.
-                </p>
-              </Alert>
-            </>
-          )}
-        </div>
-      </Container>
+              <Avatar className={classes.avatar}>
+                <AddCircleIcon />
+              </Avatar>
+              <Typography component="h1" variant="h5">
+                Sign Up Today
+              </Typography>
+              <form
+                className={classes.form}
+                id="login-form"
+                onSubmit={this.handleSignup}
+              >
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="username"
+                  label="Username"
+                  name="username"
+                  autoComplete="username"
+                  autoFocus
+                  onChange={this.handleChange}
+                />
+                <TextField
+                  name="displayName"
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="displayName"
+                  label="User Name"
+                  onChange={this.handleChange}
+                />
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                  autoComplete="current-password"
+                  onChange={this.handleChange}
+                />
+                {/* <FormControlLabel
+              control={<Checkbox value="remember" color="primary" />}
+              label="Remember me"
+            /> */}
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  color="inherit"
+                  className={classes.submit}
+                >
+                  Create User
+                </Button>
+
+                <Grid container justify="flex-end">
+                  <Grid item>
+                    <Link href={"/"} variant="body2">
+                      {"Already have an account? Sign in"}
+                    </Link>
+                  </Grid>
+                </Grid>
+              </form>
+            </div>
+
+            {loading && <Spinner name="circle" color="blue" />}
+            {error && (
+              <>
+                <Alert severity="error">
+                  {/* <p style={{ color: "red" }}> */}
+                  <AlertTitle>Registration Error</AlertTitle>
+                  <p>
+                    Please resubmit according to the following guidelines:{" "}
+                    <br />
+                    (1) Username must be unique and at least 3 characters.{" "}
+                    <br />
+                    (2) Username is case-sensitive.
+                    <br />
+                    (3) Password must be at least 3 alphanumeric characters and
+                    case-sensitive.
+                  </p>
+                </Alert>
+              </>
+            )}
+          </Grid>
+        </Grid>
+      </React.Fragment>
     );
   }
 }
@@ -152,5 +200,5 @@ export default connect(
     loading: state.users.signup.loading,
     error: state.users.signup.error
   }),
-  { signup }
+  { signup, login }
 )(SignupForm);

@@ -45,9 +45,11 @@ class CreateNewMessage extends React.Component {
           <Typography
             component="div"
             style={{
-              backgroundColor: "#cfe8fc",
+              backgroundColor: "#4e209e",
               height: "30px",
-              width: "600px"
+              width: "600px",
+              color: "white",
+              paddingLeft: "75px"
             }}
           >
             Post Your Thoughts{" "}
@@ -64,7 +66,6 @@ class CreateNewMessage extends React.Component {
                 label="New Message"
                 placeholder={this.state.text}
                 variant="outlined"
-                onKeyUp={this.countText}
                 onChange={this.handleChange}
               />
             </form>
@@ -72,7 +73,7 @@ class CreateNewMessage extends React.Component {
               type="submit"
               fullWidth
               variant="contained"
-              color="primary"
+              color="#6634f0"
               className={classes.submit}
               onClick={this.handleCreate}
             >

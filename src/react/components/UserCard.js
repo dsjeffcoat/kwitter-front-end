@@ -24,7 +24,7 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 
 const useStyles = makeStyles(theme => ({
   root: {
-    maxWidth: 345
+    maxWidth: 500
   },
 
   expand: {
@@ -99,7 +99,6 @@ export default function UserCard(props) {
         </CardContent>
       </CardActionArea>
       <CardActions disableSpacing>
-        Edit Profile
         <IconButton
           className={clsx(classes.expand, {
             [classes.expandOpen]: expanded
@@ -110,7 +109,20 @@ export default function UserCard(props) {
         >
           <ExpandMoreIcon />
         </IconButton>
-        <Button size="small" color="primary" onClick={handleClickOpen}>
+        <Button
+          size="small"
+          color="primary"
+          style={{ color: "#4e209e" }}
+          onClick={handleExpandClick}
+        >
+          Edit Profile
+        </Button>
+        <Button
+          size="small"
+          color="primary"
+          style={{ color: "#4e209e" }}
+          onClick={handleClickOpen}
+        >
           Delete User
         </Button>
         <Dialog

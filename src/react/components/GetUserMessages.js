@@ -11,6 +11,7 @@ import MessageCard from "./MessageCard";
 class GetUserMessages extends React.Component {
   componentDidMount() {
     this.props.getusermessages(this.props.username);
+    // console.log("LOGGED IN USER: " + JSON.stringify(this.props.loggedin.username));
   }
   handleToggleLikes = messageID => {
     console.log("button worked " + messageID);
@@ -38,6 +39,7 @@ class GetUserMessages extends React.Component {
             likes={message.likes.length}
             togglelikes={this.handleToggleLikes}
             deletemessage={this.handleDelete}
+            loggedinUser = {this.props.loggedin.username}
           />
         ))}
       </div>
@@ -54,6 +56,7 @@ class GetUserMessages extends React.Component {
 
 export default connect(
   state => ({
+    loggedin: state.auth.login.result,
     result: state.messages.getusermessages.result,
     loading: state.messages.getusermessages.loading,
     error: state.messages.getusermessages.error

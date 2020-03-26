@@ -129,7 +129,7 @@ class SignupForm extends React.Component {
                   required
                   fullWidth
                   id="displayName"
-                  label="User Name"
+                  label="Display Name"
                   onChange={this.handleChange}
                 />
                 <TextField

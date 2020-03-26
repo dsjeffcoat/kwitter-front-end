@@ -8,6 +8,12 @@ import FavoriteIcon from "@material-ui/icons/Favorite";
 import DeleteIcon from "@material-ui/icons/Delete";
 import CardActions from "@material-ui/core/CardActions";
 import Link from "@material-ui/core/Link";
+import Avatar from '@material-ui/core/Avatar';
+import { deepPurple } from '@material-ui/core/colors';
+import Grid from "@material-ui/core/Grid";
+import Paper from "@material-ui/core/Paper";
+
+
 import {
   Button,
   Dialog,
@@ -17,21 +23,33 @@ import {
   DialogTitle
 } from "@material-ui/core";
 
-const useStyles = makeStyles({
-  root: { maxWidth: 600 },
+const useStyles = makeStyles(theme => ({
+  root: { maxWidth: 600, flexGrow: 1 },
   title: {
     fontSize: 14
   },
   pos: {
     marginBottom: 12
+  },
+  purple: {
+    color: theme.palette.getContrastText(deepPurple[500]),
+    backgroundColor: deepPurple[500],
+  },
+  paper: {
+    padding: theme.spacing(0),
+    textAlign: "left",
+    color: theme.palette.text.secondary
   }
-});
+}));
 
 export default function MessageCard(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const url = `/profiles/${props.username}`;
-
+  let active = false;
+  if (props.username === props.loggedinUser) active = true;
+  console.log(url)
+  console.log("active is : " + active)
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -42,23 +60,40 @@ export default function MessageCard(props) {
     }
     setOpen(false);
   };
-
+  //const preventDefault = event => event.preventDefault();
   return (
     <>
       <Card className={classes.root} variant="outlined">
-        <Typography
-          component="div"
-          style={{ backgroundColor: "#cfe8fc", height: "10px", width: "600px" }}
-        />
-        <CardContent>
-          <Link href={url} variant="h5" component="h2">
-            {props.username}
-          </Link>
-
-          <Typography className={classes.pos} color="textSecondary">
+      <Grid container spacing={3} justify="left" className={classes.root}>
+      <Typography
+              component="div"
+              style={{ backgroundColor: "#cfe8fc", height: "10px", width: "600px" }}
+            />
+          <Grid item xs={2}>
+          <Paper className={classes.paper} elevation={0}>
+            <CardContent>
+              <Avatar alt={props.username} src="/broken-image.jpg" variant="square" className={classes.purple} />
+            </CardContent>
+          </Paper>
+          </Grid>
+          <Grid item xs={6}>
+          <Paper className={classes.paper} elevation={0}>
+            <CardContent>
+              <Link href={url} variant="h6">
+              {props.username}
+              </Link>
+            </CardContent>
+          </Paper>
+          </Grid>
+          <Grid item xs={12}>
+          <CardContent>
+            <Typography className={classes.pos} color="textSecondary" variant="h5">
             {props.text}
           </Typography>
-        </CardContent>
+          </CardContent>
+        </Grid>
+      </Grid>
+        
         <CardActions disableSpacing>
           <IconButton
             aria-label="add to favorites"
@@ -67,7 +102,7 @@ export default function MessageCard(props) {
             <FavoriteIcon />
             {props.likes + " likes."}
           </IconButton>
-          {props.username && (
+          {active && (
             <IconButton>
               <Button size="small" color="primary" onClick={handleClickOpen}>
                 <DeleteIcon style={{ color: "#4e209e" }} />

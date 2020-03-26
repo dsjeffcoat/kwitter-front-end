@@ -37,7 +37,9 @@ class Profile extends React.Component {
     if (this.props.result === null) {
       return <div></div>;
     }
+   
     return (
+      
       <div className={classes.root}>
         <Grid container spacing={3} justify="center">
           <Grid item xs={12}>
@@ -54,6 +56,7 @@ class Profile extends React.Component {
                 bio={this.props.result.user.about}
                 password={this.props.result.user.password}
                 deleteuser={this.handleDeleteUser}
+                loggedinUser={this.props.loggedin.username}
               />
             </Paper>
           </Grid>
@@ -64,7 +67,7 @@ class Profile extends React.Component {
           </Grid>
           <Grid item xs={12} sm={2}>
             <Paper className={classes.paper}>
-              <CreateNewMessage username={this.props.result.user.username} />
+              <CreateNewMessage username={this.props.result.user.username} /> 
               <GetUserList />
             </Paper>
           </Grid>
@@ -76,6 +79,7 @@ class Profile extends React.Component {
 
 export default connect(
   state => ({
+    loggedin: state.auth.login.result,
     result: state.users.getuser.result,
     loading: state.users.getuser.loading,
     error: state.users.getuser.error

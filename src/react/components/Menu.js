@@ -9,7 +9,7 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 // import Button from "@material-ui/core/Button";
-
+import logo from "./images/Kwitter-logo.png"
 import { Link } from "react-router-dom";
 
 class Menu extends React.Component {
@@ -39,7 +39,7 @@ class Menu extends React.Component {
         <AppBar position="static" style={{ backgroundColor: "#4e209e" }}>
           <Toolbar>
             <Typography variant="h6" className={classes.title}>
-              Kwitter
+             <img src={logo} alt="logo" height="120" width="150" /> 
             </Typography>
 
             {this.props.isAuthenticated && (
@@ -47,7 +47,7 @@ class Menu extends React.Component {
                 <Link to="/messagefeed" style={{ color: "white" }}>
                   Message Feed
                 </Link>
-                {/* <Link to="/profiles/:username">Profile</Link> */}
+                <Link to="/" style={{ color: "white" }}>Home</Link> 
                 <Link
                   to="/"
                   onClick={this.handleLogout}

@@ -43,7 +43,8 @@ export default function UserCard(props) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
   const [open, setOpen] = React.useState(false);
-
+  let active = false;
+  if (props.username === props.loggedinUser) active = true;
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -98,6 +99,7 @@ export default function UserCard(props) {
           </Typography>
         </CardContent>
       </CardActionArea>
+      {active && (
       <CardActions disableSpacing>
         <IconButton
           className={clsx(classes.expand, {
@@ -107,16 +109,9 @@ export default function UserCard(props) {
           aria-expanded={expanded}
           aria-label="show more"
         >
-          <ExpandMoreIcon />
+        Edit Profile <ExpandMoreIcon />
         </IconButton>
-        <Button
-          size="small"
-          color="primary"
-          style={{ color: "#4e209e" }}
-          onClick={handleExpandClick}
-        >
-          Edit Profile
-        </Button>
+       
         <Button
           size="small"
           color="primary"
@@ -149,7 +144,7 @@ export default function UserCard(props) {
             </Button>
           </DialogActions>
         </Dialog>
-      </CardActions>
+      </CardActions>)}
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
           <EditUserCard

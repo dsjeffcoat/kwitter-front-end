@@ -18,10 +18,10 @@ class GetUserMessages extends React.Component {
     this.props.addlike(messageID);
   };
 
-  handleDelete = event => {
-    if (event.currentTarget.id === "btnYes") {
-      this.props.deletemessage(this.props.messageID);
-    }
+  handleDelete = (messageId) => {
+    console.log(messageId)
+     this.props.deletemessage(messageId);
+    
   };
 
   render() {

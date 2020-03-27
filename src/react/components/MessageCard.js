@@ -50,13 +50,13 @@ export default function MessageCard(props) {
   if (props.username === props.loggedinUser) active = true;
   console.log(url)
   console.log("active is : " + active)
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
+  // const handleClickOpen = () => {
+  //   setOpen(true);
+  // };
 
-  const handleClose = event => {
+  const handleClose = (event, messageID) => {
     if (event.currentTarget.id === "btnYes") {
-      props.deletemessage(props.messageID);
+      props.deletemessage(messageID);
     }
     setOpen(false);
   };
@@ -72,7 +72,7 @@ export default function MessageCard(props) {
           <Grid item xs={2}>
           <Paper className={classes.paper} elevation={0}>
             <CardContent>
-              <Avatar alt={props.username} src="/broken-image.jpg" variant="square" className={classes.purple} />
+              <Avatar alt={props.username} src="/broken-image.jpg" variant="rounded" className={classes.purple} />
             </CardContent>
           </Paper>
           </Grid>
@@ -104,7 +104,7 @@ export default function MessageCard(props) {
           </IconButton>
           {active && (
             <IconButton>
-              <Button size="small" color="primary" onClick={handleClickOpen}>
+              <Button size="small" color="primary" onClick={() => props.deletemessage(props.id)}>
                 <DeleteIcon style={{ color: "#4e209e" }} />
               </Button>
               <Dialog
@@ -118,7 +118,7 @@ export default function MessageCard(props) {
                 </DialogTitle>
                 <DialogContent>
                   <DialogContentText id="alert-dialog-description">
-                    Are you sure you want to permanently delete your message?
+                    Are you sure you want to permanently delete your message?{props.id}
                   </DialogContentText>
                 </DialogContent>
                 <DialogActions>
@@ -130,7 +130,7 @@ export default function MessageCard(props) {
                   >
                     No
                   </Button>
-                  <Button onClick={handleClose} color="primary" id="btnYes">
+                  <Button onClick={() => handleClose(props.id)} color="primary" id="btnYes">
                     Yes
                   </Button>
                 </DialogActions>

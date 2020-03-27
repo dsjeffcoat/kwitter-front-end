@@ -7,7 +7,7 @@ class Signup extends React.Component {
     return (
       <>
         <Menu />
-        <h2>Come Join Us Today!</h2>
+        {/* <h2>Come Join Us Today!</h2> */}
         <SignupForm />
       </>
     );

@@ -24,7 +24,7 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 
 const useStyles = makeStyles(theme => ({
   root: {
-    maxWidth: 500
+    maxWidth: 800
   },
 
   expand: {

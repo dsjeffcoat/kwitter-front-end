@@ -6,6 +6,7 @@ Created by Diarte Jeffcoat, Cheria Artis, Howard Post and Chris McAfee
 
 This was our first ever big project during the Kenzie Academy curriculum. We used React, Redux and API manipulation in order to build a Twitter clone called Kwitter as our final project. In addition, we were to use Agile Methodology to ensure that we had a solid product to present in the end and be able to build a proper workflow representative of many companies in the real world.
 
+
 ## Overview
 
 You will be working in teams to make a clone of a common micro-blogging platform. You will be given a back-end API for you to form your front-end application around. 
